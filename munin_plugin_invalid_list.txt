@@ -1,0 +1,25 @@
+■plugin無効化
+★★代表的なplugin概要説明
+<# http://www.seeds-std.co.jp/seedsblog/488.html #>
+
+★不要なpluginの確認方法
+muninにログインし、グラフをクリックすると[Plugin Name]欄に該当するpluginのフルパスが表示される。
+
+★plugin格納ディレクトリ
+# cd /etc/munin/plugins
+
+★NFS関連
+# rm nfs4_client
+# rm nfs_client
+# rm nfsd
+# rm nfsd4
+
+★エントロピー関連
+# rm entropy
+
+★フォーク関連
+# rm forks
+
+★メール関連
+# rm exim_mailqueue
+# rm exim_mailstats
