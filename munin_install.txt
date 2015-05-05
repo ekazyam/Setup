@@ -1,0 +1,79 @@
+■Muninサーバのインストール
+1. リポジトリの追加
+★デフォルトのリポジトリではmuninパッケージが探せないので、以下を追加すること。
+★Debian公式：https://packages.debian.org/source/jessie/munin
+# vi /etc/apt/sources.list
+
+# Munin
+deb http://ftp.de.debian.org/debian jessie main
+
+2. Muninサーバのインストール
+★監視サーバ(情報収集を実施する方)はmunin(muninサーバ)とmunin-node(監視エージェント)をインストールする。
+# apt-get install munin munin-node
+
+★munin.confの編集
+# vi /etc/munin/munin.conf
+
+★コメント解除
+dbdir   /var/lib/munin
+htmldir /var/cache/munin/www
+logdir /var/log/munin
+rundir  /var/run/munin
+
+★[サーバグループ;サーバ名]はmuninで管理される名前なので任意。
+★同一のグループに所属させると、munin上でグループ化されて管理される。
+　ここでは「HomeServer」グループを作成
+# a simple host tree
+[HomeServer;LivaX]
+    address 127.0.0.1
+    use_node_name yes
+
+[HomeServer;VPN]
+    address xxx.xxx.xxx.xxx
+    use_node_name yes
+
+3. Webサーバのインストール
+★nginxをインストールする。
+# apt-get install nginx
+
+★nginxの設定
+★記載内容は子ツリー参照
+# vi /etc/nginx/sites-available/munin
+
+★nginxで有効化するためにsites-enabled配下にリンクを作成
+# ln -s /etc/nginx/sites-available/munin /etc/nginx/sites-enabled/
+
+★Webサーバの再起動
+★debian8よりsystemdに置き換わったので、コマンドに注意する。
+# systemctl restart nginx.service
+
+★nginx、munin、munin-nodeの自動起動設定
+# systemctl enable nginx.service
+
+4. Webアクセス試験
+★muninサーバへアクセスし、グラフ等が表示されることを確認する。
+http://[muninサーバのIP]/munin
+
+### ここまでサーバ側の設定 ###
+
+5. 別のサーバへmunin-nodeをインストールする。
+# apt-get install munin-node
+
+★設定ファイルを変更する。
+# vi /etc/munin/munin-node.conf
+
+★muninサーバのIPを以下の様に記載
+★ドットは\記号でエスケープし、末尾は$で終わる。
+allow ^xxx\.xxx\.xxx\.xxx$
+
+★備考：ログ停止
+log_file /dev/null
+
+★munin-nodeサービスの再起動
+★debian ～7
+# service munin-node restart
+
+★debian 8
+# systemctl restart munin-node.service
+
+★★実際にサーバ側でグラフが作成され始めるには時間がかかるので、30分ほど待つこと。
