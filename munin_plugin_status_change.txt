@@ -1,0 +1,16 @@
+■Muninサーバのインストール
+1. pluginの有効/無効切り替え
+★各種pluginの設定は監視対象で動作するmunin-node全てで実施すること。
+★muninのpluginは以下のディレクトリに配置されている。
+# ls -l /usr/share/munin/plugins/
+
+★有効/無効の切り替えは、以下のディレクトリに対しシンボリックリンクを作成/削除することで変化する。
+# ln -s /usr/share/munin/plugins/[plugin_name] /etc/munin/plugins
+
+★状態を変更後、munin-nodeを再起動する。
+★debian 7
+# service munin-node restart
+★debian 8
+# systemctl restart munin-node.service
+
+★pluginの切り替えによるmunin-server側の監視状態遷移はしばらくかかるので注意。
