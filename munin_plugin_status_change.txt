@@ -1,4 +1,4 @@
-■Muninサーバのインストール
+■pluginの切り替え
 1. pluginの有効/無効切り替え
 ★各種pluginの設定は監視対象で動作するmunin-node全てで実施すること。
 ★muninのpluginは以下のディレクトリに配置されている。
