@@ -1,16 +1,24 @@
-¡plugin‚ÌØ‚è‘Ö‚¦
-1. plugin‚Ì—LŒø/–³ŒøØ‚è‘Ö‚¦
-šŠeíplugin‚Ìİ’è‚ÍŠÄ‹‘ÎÛ‚Å“®ì‚·‚émunin-node‘S‚Ä‚ÅÀ{‚·‚é‚±‚ÆB
-šmunin‚Ìplugin‚ÍˆÈ‰º‚ÌƒfƒBƒŒƒNƒgƒŠ‚É”z’u‚³‚ê‚Ä‚¢‚éB
+â– pluginã®åˆ‡ã‚Šæ›¿ãˆ
+1. pluginã®æœ‰åŠ¹/ç„¡åŠ¹åˆ‡ã‚Šæ›¿ãˆ
+â˜…å„ç¨®pluginã®è¨­å®šã¯ç›£è¦–å¯¾è±¡ã§å‹•ä½œã™ã‚‹munin-nodeå…¨ã¦ã§å®Ÿæ–½ã™ã‚‹ã“ã¨ã€‚
+â˜…muninã®pluginã¯ä»¥ä¸‹ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«é…ç½®ã•ã‚Œã¦ã„ã‚‹ã€‚
 # ls -l /usr/share/munin/plugins/
 
-š—LŒø/–³Œø‚ÌØ‚è‘Ö‚¦‚ÍAˆÈ‰º‚ÌƒfƒBƒŒƒNƒgƒŠ‚É‘Î‚µƒVƒ“ƒ{ƒŠƒbƒNƒŠƒ“ƒN‚ğì¬/íœ‚·‚é‚±‚Æ‚Å•Ï‰»‚·‚éB
+â˜…æœ‰åŠ¹/ç„¡åŠ¹ã®åˆ‡ã‚Šæ›¿ãˆã¯ã€ä»¥ä¸‹ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«å¯¾ã—ã‚·ãƒ³ãƒœãƒªãƒƒã‚¯ãƒªãƒ³ã‚¯ã‚’ä½œæˆ/å‰Šé™¤ã™ã‚‹ã“ã¨ã§å¤‰åŒ–ã™ã‚‹ã€‚
 # ln -s /usr/share/munin/plugins/[plugin_name] /etc/munin/plugins
 
-šó‘Ô‚ğ•ÏXŒãAmunin-node‚ğÄ‹N“®‚·‚éB
-šdebian 7
+â˜…çŠ¶æ…‹ã‚’å¤‰æ›´å¾Œã€munin-nodeã‚’å†èµ·å‹•ã™ã‚‹ã€‚
+â˜…debian 7
 # service munin-node restart
-šdebian 8
+â˜…debian 8
 # systemctl restart munin-node.service
 
-šplugin‚ÌØ‚è‘Ö‚¦‚É‚æ‚émunin-server‘¤‚ÌŠÄ‹ó‘Ô‘JˆÚ‚Í‚µ‚Î‚ç‚­‚©‚©‚é‚Ì‚Å’ˆÓB
+â˜…pluginã®åˆ‡ã‚Šæ›¿ãˆã«ã‚ˆã‚‹munin-serverå´ã®ç›£è¦–çŠ¶æ…‹é·ç§»ã¯ã—ã°ã‚‰ãã‹ã‹ã‚‹ã®ã§æ³¨æ„ã€‚
+
+â˜…munin-pluginã®æ¤œè¨¼
+1. [label-name].value [parameter]ã¨ã„ã†å½¢å¼ã§å‡ºåŠ›ã•ã‚Œã¦ã„ã‚Œã°å•é¡Œãªã—ã€‚
+# munin-run [plugin-name]
+
+â˜…muninã®ã‚³ãƒ³ãƒ•ã‚£ã‚°ç¢ºèª
+1. [label-name].[config-name] [parameter]ã¨ã„ã†å½¢å¼ã§å‡ºåŠ›ã•ã‚Œã¦ã„ã‚Œã°å•é¡Œãªã—ã€‚
+# munin-run [plugin-name] config
