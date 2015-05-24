@@ -1,3 +1,24 @@
 ■muninのUIを変更する
 ★以下のURLを参照
 https://github.com/jonnymccullagh/munstrap
+
+★テンプレートファイルのダウンロード
+githubに公開されているmunstrap-master.zipをダウンロードする。
+
+★munin標準のテンプレートを退避
+# cd /etc/munin
+# mv static static_org
+# mv templates templates_org
+
+★munstrapを解凍
+# unzip munstrap-master.zip
+
+★権限の変更
+# cd munstrap-master
+# chown -R root:root static templates
+
+★UIを変更
+# mv static /etc/munin/
+# mv templates /etc/munin/
+
+以上でUIが変更される。
