@@ -1,0 +1,20 @@
+server {
+        # Port
+        listen  443 default_server;
+        ssl on;
+
+        ssl_certificate      /etc/nginx/ssl/my_munin.crt;
+        ssl_certificate_key  /etc/nginx/ssl/my_munin.key;
+
+        # ServerName
+        server_name ~"^([0-9].)+?[0-9]+?$";
+
+        # Log
+        access_log /dev/null;
+        error_log  /dev/null;
+
+        # Page
+        location ~ /.* {
+                rewrite ^(.*)$ http://kids.yahoo.co.jp/ redirect;
+        }
+}
