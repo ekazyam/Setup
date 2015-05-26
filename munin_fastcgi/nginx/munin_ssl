@@ -1,0 +1,14 @@
+server {
+		listen 443;
+
+		server_name hogehoge.com
+
+		ssl on;
+        ssl_certificate      /etc/nginx/ssl/my_munin.crt;
+        ssl_certificate_key  /etc/nginx/ssl/my_munin.key;
+
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+
+        include /etc/nginx/sites-available/munin_common;
+}
