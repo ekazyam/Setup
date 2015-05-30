@@ -1,33 +1,52 @@
-■Muninの処理をfastcgiに任せる
+■Muninインストール環境
 1. 情報源
 ★デフォルトではcron設定となっており、5分毎にグラフが生成される。
 ★cron設定からcgi設定に変更することにより動的なグラフ生成を可能とすることでパフォーマンスの向上を目的とする。
 ★Munin公式：http://munin-monitoring.org/wiki/MuninConfigurationMasterCGI
 ★環境：Debina 8
+★nginx実行ユーザ
+  nginx:www-data
+★cgi実行ユーザ(html,graph同様)
+  sock-user:www-data
+  cgi-user:munin
+  cgi-group:munin
+★munin実行ユーザ
+  munin:munin
 
-2. fast-cgiのインストール
+■Fast-Cgiのインストール
+★fast-cgiのインストールにより、nginx→munin→fastcgiのような経路で委任する処理が実行される。
 ★fast-cgiをインストールする
 # apt-get install spawn-fcgi
 
 ★起動テスト
-spawn-fcgi -s /var/run/munin/fcgi-graph.sock -U www-data -u www-data -g www-data /usr/lib/munin/cgi/munin-cgi-graph
-spawn-fcgi -s /var/run/munin/fcgi-html.sock -U www-data -u www-data -g munin  /usr/lib/munin/cgi/munin-cgi-html
+# spawn-fcgi -n -s /var/run/munin/fcgi-graph.sock -U www-data -u munin -g munin /usr/lib/munin/cgi/munin-cgi-graph
+# spawn-fcgi -n -s /var/run/munin/fcgi-html.sock -U www-data -u munin -g munin  /usr/lib/munin/cgi/munin-cgi-html
+
+★起動確認
+# ps auxww | grep perl
+★以下のプロセスが起動していること。
+/usr/bin/perl -T /usr/lib/munin/cgi/munin-cgi-graph
+/usr/bin/perl -T /usr/lib/munin/cgi/munin-cgi-html
+
+★権限の変更
+★起動テストにてcgi実行ユーザ(ここではmunin)が書き込むログファイルに権限が付与されていない場合、以下のコマンドを発行
+# chown munin /var/log/munin/munin-graph.log
+# chown munin /var/log/munin/munin-html.log
 
 ★起動スクリプトの登録
 # vi /etc/init.d/munin-fast-cgi-graph
 # vi /etc/init.d/munin-fast-cgi-html
-munin-fast-cgi-graph.txt , munin-fast-cgi-html.txt 参照(公式改変版)
+spawn-fcgi-munin-graph , spawn-fcgi-munin-html 参照
 
 ★自動起動登録
 ★自動起動設定ツールをインストール(本来systemdを利用すべき)
 # apt-get install chkconfig 
 
 ★自動起動登録
-# chkconfig munin-fast-cgi-graph on
-# chkconfig munin-fast-cgi-html on
+# chkconfig spawn-fcgi-munin-graph on
+# chkconfig spawn-fcgi-munin-html on
 
-2. munin.confの変更
-★モードの変更を行う
+★muninの実行モードを定期実行(cron)から随時実行(cgi)へ変更する
 # vi /etc/munin/munin.conf
 
 #graph_strategy cron
@@ -36,17 +55,14 @@ graph_strategy cgi
 #html_strategy cron
 html_strategy cgi
 
-★確認
-# chkconfig --list | grep -e munin-fast-cgi-graph -e munin-fast-cgi-html
+★起動確認
+# ps auxww | grep perl
+★以下のプロセスが起動していること。
+/usr/bin/perl -T /usr/lib/munin/cgi/munin-cgi-graph
+/usr/bin/perl -T /usr/lib/munin/cgi/munin-cgi-html
 
 ■nginxの設定
-1. fast-cgiを呼び出す様に変更(公式参照)
-# vi /etc/nginx/sites-available/munin.http
-# vi /etc/nginx/sites-available/munin.ssh
+1. fast-cgiを呼び出す様に変更
+# munin_http , munin_ssl , munin_common 参照
 
-■バグ修正(自環境限定)
-★nginxのログを参照し、No such file.等のエラーを消していく。
-★pngファイルの参照先が/var/cache/munin/www/usr/lib/munin/cgi/munin-cgi-graphとなっていたので、一時しのぎで変更
-# mkdir -p /usr/share/nginx/html/munin-cgi
-# ln -s munin-cgi /var/cache/munin/www/
-
+以上でmuninがfast-cgi経由で実行されるようになる。
