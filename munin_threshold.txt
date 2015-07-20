@@ -1,0 +1,12 @@
+★しきい値をサーバ側で変更する。
+# 以下の記載をmunin.confのサーバセクションに記載する。
+# プラグイン名.内部パラメータ名.項目 値
+# 内部パラメータ名は、muninの画面より確認可能。
+
+★ 値が上回った場合
+room_temp.himidity.warning 50
+room_temp.himidity.critical 60
+
+★ 値が下回った場合
+room_temp.himidity.warning 50:
+room_temp.himidity.critical 40:
