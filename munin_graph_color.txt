@@ -1,0 +1,35 @@
+■Muninのグラフに昼夜で背景色を変更する。
+★以下のサイトを参考に設定を行わせて頂く。
+http://buty4649.hatenablog.com/entry/2014/07/25/munin%E3%82%B0%E3%83%A9%E3%83%95%E3%81%A7%E5%A4%9C%E9%96%93%E5%B8%AF%E3%81%AB%E8%89%B2%E3%82%92%E4%BB%98%E3%81%91%E3%82%8B
+
+★本設定は、以下の時間帯を昼/夜として定める。
+0-9時→夜
+10-18時→昼
+19時→23時→夜
+
+★rrdスクリプトの作成
+以下を変更し、実行する。
+☆変更前
+  if($d >= (19 * 3600) || $d <= (6 * 3600)) {
+☆変更後
+  if($d >= (19 * 3600) || $d <= (9 * 3600)) {
+
+修正後、実施ファイルを以下に配置する。
+ # /var/lib/munin/
+
+★cron.dの設定
+以下を追記する。
+*/5 0-9,19-23 * * * munin perl -MRRDs -e 'RRDs::update("/var/lib/munin/nighttime.rrd","N:1")'
+*/5 10-18      * * * munin perl -MRRDs -e 'RRDs::update("/var/lib/munin/nighttime.rrd","N:0")'
+
+★munin.confの設定
+ノードセクションに以下を記載。
+  graph_args_after DEF:night=/var/lib/munin/nighttime.rrd:night:MAX TICK:night\#a0a0a040:1.0
+
+☆設定例
+[HomeServer;CentOS]
+    graph_args_after DEF:night=/var/lib/munin/nighttime.rrd:night:MAX TICK:night\#a0a0a040:1.0
+    address 127.0.0.1
+    use_node_name yes
+
+以上で、グラフの生成時に背景色が反映される。
