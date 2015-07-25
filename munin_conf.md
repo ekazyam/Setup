@@ -1,7 +1,7 @@
 ﻿# グローバル設定
 
 |設定項目	|概要	|チューニング	|必須可否	|デフォルト値	|使い方	|
-|:-----|:-----|:-----|:-----|:-----|
+|:-----|:-----|:-----|:-----|:-----|:-----|
 |dbdir|データベースファイルの保存ディレクトリ。|-|Yes|/var/lib/munin|dbdir /var/lib/munin|
 |htmldir|HTMLの保存ディレクトリ。<br>グラフの更新周期に伴い、HTMLファイル(グラフ)が配置される。|-|Yes|/var/cache/munin/www|htmldir /var/cache/munin/www|
 |logdir|ログが保存されるディレクトリ。|-|Yes|/var/log/munin|logdir /var/log/munin|
