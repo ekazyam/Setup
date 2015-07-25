@@ -6,7 +6,7 @@
 |htmldir|HTMLの保存ディレクトリ。<br>グラフの更新周期に伴い、HTMLファイル(グラフ)が配置される。|-|Yes|/var/cache/munin/www|htmldir /var/cache/munin/www|
 |logdir|ログが保存されるディレクトリ。|-|Yes|/var/log/munin|logdir /var/log/munin|
 |rundir|Muninの実行プロセスが可能されるディレクトリ。|-|Yes|/var/run/munin|rundir /var/run/munin|
-|tmpldir|テンプレートファイルの設置ディレクトリ。<br>グラフ生成時にをmuninプロセスがtemplateファイルを置換し、HTMLファイルを出力する。|該当するファイル郡を置き換えることでMuninの外観を変更できる。|Yes|/etc/munin/templates|tmpldir /etc/munin/templates|
+|tmpldir|テンプレートファイルの設置ディレクトリ。<br>グラフ生成時にをmuninプロセスがtemplateファイルを置換し、HTMLファイルを出力する。|該当するファイル郡を置き換えることでMuninの外観を変更できる。<br>https://github.com/DaveMDS/munin_dynamic_template<br>https://github.com/jonnymccullagh/munstrap<br>https://github.com/Rauks/Moonstrap|Yes|/etc/munin/templates|tmpldir /etc/munin/templates|
 |staticdir|テンプレートを置換するプログラムのの設置ディレクトリ。<br>グラフ生成時にをmuninプロセスがtemplateファイルを置換し、HTMLファイルを出力する。|該当するファイル郡を置き換えることでMuninの外観を変更できる。|Yes|/etc/munin/templates|tmpldir /etc/munin/static|
 |fork|測定データを各ノードから収集する際にノードの数に応じてプロセスを並列で実行するか否かの指定。|Yes：収集時間が短くなる。ただし、Muninサーバの負荷が高くなる。<br>No：収集時間が長くなる。ただし、Muninサーバの負荷は低くなる。||Yes||
 |max_processes|測定データを各ノードから収集するプロセスの最大プロセス数。|測定ノード数に応じて変更する。ただし、応じてMuninサーバの負荷が増減する。尚、並列に処理しない場合は0を指定する。<br>調整目安1：Muninデータ収集時間(全ノード分) > 収集周期<br>調整目安2：MuninサーバのCPU負荷が高い場合||16|max_processes 8|
