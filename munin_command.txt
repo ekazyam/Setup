@@ -1,0 +1,2 @@
+¡‘¦“I‚ÉƒOƒ‰ƒt‚ğ¶¬
+ # su - munin --shell=/usr/bin/munin-cron
