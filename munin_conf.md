@@ -19,7 +19,7 @@
 |contact.contact.text text||||||
 |contact.contact.max_messages number||||||
 |contact.contact.always_send [warning] [critical]||||||
-|contacts contact-list||||||
+|contacts contact-list|通知グループを定義する。ここで定義した通知グループに対し、[Group]/[Node]を所属させる。|メール/スクリプトによる外部連携を行う際に通知グループを定義する。<br>複数定義可。<br>contacts contact_admin contact_developper||未定義の場合、contact.contact.commandで指定したcontactが有効なcontactグループとして利用される。|contact_admin contact_developper|
 |[bar;example.com;foo.example.com]|親グループ定義を行う。|定義したグループをさらにグループ化する。||-|[MyParentGroup;MyGroup;MyNode]|
 |[example.com;foo.example.com]|グループ定義を行う。|所属させるノードの種別、用途をグループ化し管理性を向上させる。||-|[MyGroup;MyNode]|
 |[foo.example.com]|ノード定義を行う。|収集対象のIPアドレス、プラグインのwarning/critical値を定義する。||[localhost]<br>address 127.0.0.1<br>use_node_name yes|[MyNode]|
