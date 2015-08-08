@@ -1,0 +1,55 @@
+■インストール手順
+debianを対象としたインストール手順についてまとめる。
+
+■javaインストール
+★動作に2.4.x系はjdk-7,2.5系はjdk-8が必要となる。
+# apt-get install openjdk-7-jre
+
+■rundeckのインストール
+★ダウンロード
+# wget http://download.rundeck.org/deb/rundeck-2.4.2-1-GA.deb
+
+★インストール
+# dpkg -i rundeck-2.4.2-1-GA.deb
+
+■設定
+★以下のファイルのlocalhost部分をサーバのIPに書き換えること。
+# vi /etc/rundeck/rundeck-config.properties
+☆Before
+grails.serverURL=http://localhost:4440
+
+☆After
+grails.serverURL=http://xxx.xxx.xxx.xxx:4440
+
+# vi /etc/rundeck/framework.properties
+☆Before
+framework.server.url = http://localhost:4440
+
+☆After
+framework.server.url = http://xxx.xxx.xxx.xxx:4440
+
+■起動準備から確認
+★プロセスの起動確認を行い、プロセスが起動していること。
+# ps auxww | grep rundeck
+
+★サービス起動関連
+★offになっていることを確認
+# chkconfig --list | grep rundeck
+
+★設定
+# chkconfig rundeck on
+
+★onになっていることを確認
+# chkconfig --list | grep rundeck
+
+★サービス起動
+# service rundeck start
+
+■アクセス確認
+★ブラウザにて以下にアクセス
+http://xxx.xxx.xxx.xxx:4440
+
+★認証
+デフォルトではadmin/admin
+
+以上。
