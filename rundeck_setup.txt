@@ -1,0 +1,12 @@
+■ユーザのパスワード変更
+★以下のファイルについて編集する。ただし、パスワードは平文で保存される。
+# vi /etc/rundeck/realm.properties
+
+☆Before
+admin:admin,user,admin,architect,deploy,build
+
+☆After
+admin:hogehoge,user,admin,architect,deploy,build
+
+★サービスのリスタート
+# service rundeckd restart
