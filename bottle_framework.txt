@@ -1,0 +1,28 @@
+軽量フレームワーク、bottleの動作チェックを以下の手順に従い構築/確認する。
+
+■pip/bottleのインストール
+aptitude install python-pip
+
+pip install bottle
+
+★pipを使わない場合はこちらからダウンロードし、
+　駆動するファイルから見えるパスに設置すること。
+wget http://bottlepy.org/bottle.py
+
+■イベント駆動ファイルの作成
+vi hello_world.py
+
+■記載内容
+from bottle import route, run
+
+@route('/hello')
+def hello():
+  return "Hello World!"
+
+run(host='192.168.1.128', port=4040, debug=True, reloader=True)
+
+■起動
+python hello_world.py
+
+■アクセス
+http://192.168.1.128:4040/hello
