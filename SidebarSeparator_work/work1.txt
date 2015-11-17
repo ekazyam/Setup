@@ -1,0 +1,84 @@
+import sublime
+import sublime_plugin
+import json
+import os.path
+
+
+class SidebarSeparator(sublime_plugin.TextCommand):
+
+    # show_tabs status.
+    show_tabs
+
+    def run(self, edit):
+        # get setting values from setting file.
+        setting_values = self.GetSettingValues()
+
+        # set separate data.
+        separate_value = self.SetSeparate(setting_values)
+
+        # create separate file.
+        separate_file = sublime.active_window().new_file()
+
+        # set buffer name.
+        separate_file.set_name(separate_value)
+
+        # set not save as separate file propertie.
+        separate_file.set_scratch(True)
+
+        # set read only propertie.
+        separate_file.set_read_only(True)
+
+        # hide tabbar.
+        self.HideTabBar()
+
+    def GetSettingValues(self):
+        # get separate value from setting file.
+        setting_values = {}
+        try:
+            settings = sublime.load_settings(
+                'SidebarSeparator.sublime-settings')
+            setting_values["separate_value"] = settings.get(
+                'separate_value', '-')
+            setting_values["separate_count"] = settings.get(
+                'separate_count', 100)
+        except:
+            pass
+        return setting_values
+
+    def SetSeparate(self, setting_values):
+        # set separate value
+        return setting_values["separate_value"] * setting_values["separate_count"]
+
+    def HideTabBar(self):
+        # check setting file exist.
+        # Auto Save File or Other.
+        setting_file = self.CheckSettingFileExists()
+
+        # get json file from setting file.
+        setting_data = self.LoadSettingData(setting_file)
+
+        # debug print.
+        print(setting_data['windows'][0]['show_tabs'])
+
+        if(setting_data['windows'][0]['show_tabs'] == True):
+            sublime.active_window().run_command('toggle_tabs')
+
+    def CheckSettingFileExists(self):
+        # set path of packages.
+        path = sublime.packages_path().replace('Packages', '')
+
+        # setting_files.
+        setting_files = (path + '\Local\Auto Save Session.sublime_session',
+                         path + '\Local\Session.sublime_session')
+
+        # check setting files exists.
+        if(os.path.isfile(setting_files[0])):
+            return setting_files[0]
+        elif(os.path.isfile(setting_files[1])):
+            return setting_files[1]
+        exit
+
+    def LoadSettingData(self, setting_file):
+        # load json from setting file.
+        return json.loads(
+            open(setting_file, 'r', encoding="utf8").read(), strict=False)
